@@ -24,6 +24,19 @@ public class Main {
     }};
 
     public static void main(String[] args) {
+        people.add(new Person("Tripp", 20));
+        people.add(new Person("Trapp", 19));
+        people.add(new Person("Trull", 18));
+        people.add(new Person("Kålle", 43));
+        people.add(new Person("Ada", 47));
+
+        cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
+        cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
+        cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
+        cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
+        cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
+        cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
+
         int menuSelection;
         while (true) {
             menuSelection = arrayMenu(MENU_ITEMS);
@@ -122,9 +135,13 @@ public class Main {
     }
 
     private static void printRegistry() {
+        if(cars.size() == 0){
+            System.out.println("Registret är tomt!");
+        }
         for (Car c : cars) {
             System.out.println(c);
         }
+        System.out.println("");
     }
 
     private static int arrayMenu(ArrayList menuList) {
