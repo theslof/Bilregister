@@ -64,10 +64,6 @@ public class Car {
             this.weight = weight;
     }
 
-    public String toString() {
-        return "{Owner: " + owner.getName() + ", Color: " + color + "}";
-    }
-
     public double getRange() {
         return fuelAmount / mpg;
     }
@@ -91,5 +87,19 @@ public class Car {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public String toString() {
+        return "{Owner: " + owner.getName() + ", Color: " + color + "}";
+    }
+
+    public void copy(Car car){
+        weight = car.weight;
+        seats = car.seats;
+        fuelAmount = car.fuelAmount;
+        mpg = car.mpg;
+        color = car.color;
+        owner = car.owner;
+        seatOccupied = Arrays.copyOf(car.seatOccupied, car.seatOccupied.length);
     }
 }

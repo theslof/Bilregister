@@ -7,42 +7,45 @@ import java.util.Scanner;
 public class Main {
     private static final ArrayList<Car> cars = new ArrayList<Car>();
     private static final ArrayList<Person> people = new ArrayList<Person>();
-    private static final ArrayList<String> COLORS = new ArrayList<String>(){{
+    private static final ArrayList<String> COLORS = new ArrayList<String>() {{
         add("Svart");
         add("Blå");
         add("Grön");
         add("Röd");
-        add("Vit");}};
-    private static final String[] MENU_ITEMS = {
-            "(1) Skriv ut registret",
-            "(2) Lägg till person",
-            "(3) Lägg till bil",
-            "(4) Ändra person",
-            "(5) Ändra bil",
-            "(0) Avsluta"};
+        add("Vit");
+    }};
+    private static final ArrayList<String> MENU_ITEMS = new ArrayList<String>() {{
+        add("Skriv ut registret");
+        add("Lägg till person");
+        add("Lägg till bil");
+        add("Ändra person");
+        add("Ändra bil");
+        add("Avsluta");
+    }};
 
     public static void main(String[] args) {
         int menuSelection;
         while (true) {
-            menuSelection = menu();
+            menuSelection = arrayMenu(MENU_ITEMS);
 
             switch (menuSelection) {
                 case 0:
-                    return;
-                case 1:
                     printRegistry();
                     break;
-                case 2:
+                case 1:
                     addPerson();
                     break;
-                case 3:
+                case 2:
                     addCar();
                     break;
-                case 4:
+                case 3:
                     changePerson();
                     break;
-                case 5:
+                case 4:
                     changeCar();
+                    break;
+                case 5:
+                    return;
             }
         }
     }
@@ -53,7 +56,7 @@ public class Main {
             return;
         }
 
-        System.out.println("Vem är bilen du vill ändra? ");
+        System.out.println("Vilken bil vill du ändra? ");
         int choice = arrayMenu(cars);
         Car car = cars.get(choice);
 
@@ -110,7 +113,7 @@ public class Main {
     private static void addPerson() {
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Lägger till ny person!\nVad heter personen? ");
+        System.out.println("Lägger till ny person!\nVad heter personen? ");
         String name = input.next();
         System.out.print("Hur gammal är personen? ");
         int age = input.nextInt();
@@ -124,29 +127,15 @@ public class Main {
         }
     }
 
-    private static int menu() {
-        System.out.println("--- Bilregister ---");
-        for (String item : MENU_ITEMS) {
-            System.out.println(item);
-        }
-        int choice;
-        System.out.print("Välj ett alternativ: ");
-        do {
-            choice = inputInt();
-        } while (choice < 0 || choice >= MENU_ITEMS.length);
-
-        return choice;
-    }
-
-    private static int arrayMenu(ArrayList menuList){
-        int i = 0;
+    private static int arrayMenu(ArrayList menuList) {
+        int i = 1;
         for (Object item : menuList) {
             System.out.println("(" + i++ + ") " + item);
         }
         int choice;
         System.out.print("Välj ett alternativ: ");
         do {
-            choice = inputInt();
+            choice = inputInt()-1;
         } while (choice < 0 || choice >= menuList.size());
 
         return choice;
