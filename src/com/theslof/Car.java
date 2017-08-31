@@ -90,7 +90,7 @@ public class Car {
     }
 
     public String toString() {
-        return "{Owner: " + owner.getName() + ", Color: " + color + "}";
+        return "[Ägare: " + owner.getName() + ", Färg: " + color + "]";
     }
 
     public void copy(Car car){
