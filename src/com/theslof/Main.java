@@ -24,9 +24,11 @@ public class Main {
     private static final ArrayList<String> MENU_ITEMS = new ArrayList<String>() {{
         add("Skriv ut registret");
         add("Lägg till person");
-        add("Lägg till bil");
         add("Ändra person");
+        add("Ta bort person");
+        add("Lägg till bil");
         add("Ändra bil");
+        add("Ta bort bil");
         add("Avsluta");
     }};
 
@@ -71,18 +73,26 @@ public class Main {
                     addPerson();
                     break;
                 case 2:
-                    //Lägg till en ny bil
-                    addCar();
-                    break;
-                case 3:
                     //Ändra namn och ålder på en person
                     changePerson();
                     break;
+                case 3:
+                    //Ändra namn och ålder på en person
+                    deletePerson();
+                    break;
                 case 4:
+                    //Lägg till en ny bil
+                    addCar();
+                    break;
+                case 5:
                     //Ändra ägare och färg på en bil
                     changeCar();
                     break;
-                case 5:
+                case 6:
+                    //Ändra ägare och färg på en bil
+                    deleteCar();
+                    break;
+                case 7:
                     //Avslutar programmet, eftersom vi är i main()
                     return;
             }
@@ -187,6 +197,65 @@ public class Main {
         //Ändra på ålder och namn i personens objekt
         owner.setAge(age);
         owner.setName(name);
+    }
+
+    //Ta bort en bil
+    private static void deleteCar() {
+        //Kolla om vår bil-lista är tom
+        if (cars.size() == 0) {
+            //Listan är tom, informera användaren och avbryt
+            System.out.println("Det finns inga bilar registrerade!");
+            return;
+        }
+
+        System.out.println("Vilken bil vill du ta bort? ");
+        //Kalla på metoden arrayMenu med vår bil-lista som argument.
+        int choice = arrayMenu(cars);
+        Car c = cars.get(choice);
+
+        //Radera bilen från ägarens lista övr bilar
+        cars.get(choice).getOwner().removeCar(c);
+        cars.remove(choice);
+    }
+
+    //Ta bort en person
+    private static void deletePerson() {
+        //Kolla om vår person-lista är tom
+        if (people.size() == 0) {
+            //Listan är tom, informera användaren och avbryt
+            System.out.println("Det finns inga personer registrerade!");
+            return;
+        }
+
+        System.out.println("Vilken person vill du ta bort? ");
+        //Kalla på metoden arrayMenu med vår person-lista som argument.
+        int choice = arrayMenu(people);
+        Person p = people.get(choice);
+
+        //Kolla om personen äger bilar
+        if(p.getCars().size() > 0){
+            //Skriv ut alla bilar som ägs av personen
+            System.out.println(p.getName() + " äger följande bilar:");
+            for(Car c : p.getCars())
+                System.out.println(c);
+            //Fråga om användaren vill radera personen trots att dessa bilar raderas
+            System.out.println("Dessa bilar kommer att raderas. Fortsätt? J/N");
+
+            //Läs in svaret, J eller N
+            Scanner input = new Scanner(System.in);
+            char s;
+            do{
+                //Läs in en versal
+                s = input.next().toUpperCase().toCharArray()[0];
+            }while (s != 'J' && s != 'N');
+            //Om användaren inte vill radera, avbryt
+            if(s == 'N')
+                return;
+            //Radera alla bilar som ägs av personen
+            cars.removeAll(p.getCars());
+        }
+        //Radera personen
+        people.remove(p);
     }
 
     //Skriv ut vårt bilregister

@@ -86,7 +86,10 @@ public class Car {
     }
 
     public void setOwner(Person owner) {
+        if(this.owner != null)
+            this.owner.removeCar(this);
         this.owner = owner;
+        this.owner.addCar(this);
     }
 
     public String toString() {

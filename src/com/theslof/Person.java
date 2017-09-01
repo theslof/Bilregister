@@ -1,8 +1,11 @@
 package com.theslof;
 
+import java.util.ArrayList;
+
 public class Person {
     private String name;
     private int age;
+    private ArrayList<Car> cars = new ArrayList<>();
 
     public Person(String name, int age){
         setName(name);
@@ -30,7 +33,19 @@ public class Person {
         this.age = age;
     }
 
+    public ArrayList<Car> getCars() {
+        return cars;
+    }
+
     public String toString(){
         return getName() + ", " + getAge();
+    }
+
+    public void removeCar(Car c) {
+        cars.remove(c);
+    }
+
+    public void addCar(Car c) {
+        cars.add(c);
     }
 }
