@@ -132,7 +132,7 @@ public class Main {
 
         System.out.println("Lägger till ny person!\nVad heter personen? ");
         //Läs in en sträng, fram till första mellanrummet
-        String name = input.next();
+        String name = input.nextLine();
         System.out.print("Hur gammal är personen? ");
         //Läs in en int
         int age = inputInt();
@@ -189,7 +189,7 @@ public class Main {
 
         System.out.print("Vad ska personen heta? ");
         //Läs in en sträng, fram till första mellanrummet
-        String name = input.next();
+        String name = input.nextLine();
 
         System.out.print("Hur gammal är personen? ");
         int age = inputInt();
