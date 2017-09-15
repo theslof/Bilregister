@@ -20,16 +20,16 @@ public class Main {
         add("Vit");
     }};
 
-    //Skapa en ArrayList som håller huvudmenyn
-    private static final ArrayList<String> MENU_ITEMS = new ArrayList<String>() {{
-        add("Skriv ut registret");
-        add("Lägg till person");
-        add("Ändra person");
-        add("Ta bort person");
-        add("Lägg till bil");
-        add("Ändra bil");
-        add("Ta bort bil");
-        add("Avsluta");
+    //Skapa en ArrayList som håller huvudmenyn, av typen MenuItem med en sträng och metod.
+    private static final ArrayList<MenuItem> MENU_ITEMS = new ArrayList<MenuItem>() {{
+        add(new MenuItem("Skriv ut registret", Main::printRegistry));
+        add(new MenuItem("Lägg till person", Main::addPerson));
+        add(new MenuItem("Ändra person", Main::changePerson));
+        add(new MenuItem("Ta bort person", Main::deletePerson));
+        add(new MenuItem("Lägg till bil", Main::addCar));
+        add(new MenuItem("Ändra bil", Main::changeCar));
+        add(new MenuItem("Ta bort bil", Main::deleteCar));
+        add(new MenuItem("Avsluta", Main::exit));
     }};
 
     /*--------------------------
@@ -54,49 +54,33 @@ public class Main {
         cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
         cars.add(new Car(COLORS.get((int)(Math.random() * COLORS.size())), people.get((int)(Math.random() * people.size()))));
 
-        int menuSelection;
         //Starta vår program-loop. Denna körs tills man väljer att avsluta programmet.
         while (true) {
-
             //Kör metoden arrayMenu med vår huvudmeny från tidigare som argument.
-            //Metoden returnerar vårt menyval
-            menuSelection = arrayMenu(MENU_ITEMS);
-
-            //Kör metod baserat på vårt menyval
-            switch (menuSelection) {
-                case 0:
-                    //Skriv ut vårt register
-                    printRegistry();
-                    break;
-                case 1:
-                    //Lägg till en ny person
-                    addPerson();
-                    break;
-                case 2:
-                    //Ändra namn och ålder på en person
-                    changePerson();
-                    break;
-                case 3:
-                    //Ändra namn och ålder på en person
-                    deletePerson();
-                    break;
-                case 4:
-                    //Lägg till en ny bil
-                    addCar();
-                    break;
-                case 5:
-                    //Ändra ägare och färg på en bil
-                    changeCar();
-                    break;
-                case 6:
-                    //Ändra ägare och färg på en bil
-                    deleteCar();
-                    break;
-                case 7:
-                    //Avslutar programmet, eftersom vi är i main()
-                    return;
-            }
+            //Metoden kör sedan metoden kopplat till vårt val
+            doMenu(MENU_ITEMS);
         }
+    }
+
+    private static void doMenu(ArrayList<MenuItem> menuList){
+        //Vi behöver i efter loopen, så den deklareras här
+        int i = 1;
+
+        //För varje item i menuList, jag använder Object eftersom den är kompatibel med alla former av ArrayList
+        for (MenuItem item : menuList) {
+            //Skriv ut menyn på formen "(i) item"
+            System.out.println("(" + i++ + ") " + item.menuString);
+        }
+
+        int choice;
+        System.out.print("Välj ett alternativ: ");
+        //Läs in användarens val minus 1 då menyn börjar på 1, men index börjar på 0
+        do {
+            choice = inputInt()-1;
+            //Kör denna loopen så länge användaren inte väljer ett av valen från listan
+        } while (choice < 0 || choice >= menuList.size());
+
+        menuList.get(choice).execute();
     }
 
     //Lägg till en ny bil
@@ -320,5 +304,9 @@ public class Main {
         } while (waiting);
 
         return i;
+    }
+
+    public static void exit(){
+        System.exit(0);
     }
 }
